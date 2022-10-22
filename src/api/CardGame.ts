@@ -17,6 +17,12 @@ const selectedCards: Ref<number[]> = ref([]);
 // Кол-во одинаковых карт в группе при выборе
 let countIdenticalCard: number;
 
+// Кол-во непарных карт
+let countCard: number;
+
+// Подгруженные изображения для карт
+let urlImages: string[];
+
 /**
  * Передаем функции для работы игры
  * @param count - Кол-во одинаковых карт в группе при выборе
@@ -30,6 +36,7 @@ export default function cardGame(count: number) {
 		selectCard,
 		isShowCard,
 		getUrlCard,
+		restartCardGame,
 	}
 }
 
@@ -38,8 +45,13 @@ export default function cardGame(count: number) {
  * @param count - кол-во непарных карт
  */
 async function initMapCards(count: number): Promise<void> {
-	const urls: string[] = await getUrls(count);
-	fillMapCards(count, urls);
+	countCard = count;
+	urlImages = await getUrls(countCard);
+	restartCardGame();
+}
+
+function restartCardGame() {
+	fillMapCards(countCard, urlImages);
 	shuffleMapCard();
 }
 

@@ -1,5 +1,6 @@
 <template>
 	<div class="card-game">
+		<button @click="handleClickRestart">restart</button>
 		<template v-if="isInitCardGame">
 			<div class="card-game__group-flip-card" v-for="rowItem in rows" :key="'row-item-' + rowItem">
 				<flip-card
@@ -11,6 +12,9 @@
 				/>
 			</div>
 		</template>
+		<div v-else>
+			loading...
+		</div>
 	</div>
 </template>
 
@@ -38,16 +42,16 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const { selectCard, initMapCards, isInitCardGame, isShowCard, getUrlCard } = cardGame(countIdenticalCard);
+		const { selectCard, initMapCards, restartCardGame, isInitCardGame, isShowCard, getUrlCard } = cardGame(countIdenticalCard);
 		const count = (props.cols * props.rows) / countIdenticalCard;
 		initMapCards(count);
 
 		return {
-			initMapCards, // Инициализация
 			isInitCardGame, // Игра инициализирована
 			getUrlCard, // По индексу карты получаем url изображения
 			selectCard, // Механизм выбора карты
 			isShowCard, // По индексу карты получаем открыта карта или закрыта
+			restartCardGame, // Рестарт игры
 		};
 	},
 	methods: {
@@ -81,6 +85,13 @@ export default defineComponent({
 			const index: number = this.getIndex(rowItem, colItem);
 			this.selectCard(index);
 		},
+
+		/**
+		 * Перезапускаем игру
+		 */
+		handleClickRestart() {
+			this.restartCardGame();
+		}
 	},
 });
 </script>
