@@ -1,19 +1,30 @@
 .flip-card {
 	position: relative;
-	width: 50px;
+	width: 60px;
 	border: 1px solid #fff;
-	background: black;
+	transform: rotateY(180deg);
+	transition: transform .5s linear;
+	transform-style: preserve-3d;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: blue;
+		transform: translateZ(-1px);
+	}
 
 	img {
 		display: block;
 		position: relative;
 		width: 100%;
-		opacity: 0;
+		transform: translateZ(1px);
 	}
 
 	&--show {
-		img {
-			opacity: 1;
-		}
+		transform: rotateY(0deg);
 	}
 }
