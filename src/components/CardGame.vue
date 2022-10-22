@@ -33,12 +33,12 @@ export default defineComponent({
 		// Кол-во столбцов
 		cols: {
 			type: Number,
-			default: 2,
+			default: 5,
 		},
 		// Кол-во строк
 		rows: {
 			type: Number,
-			default: 2,
+			default: 6,
 		},
 	},
 	setup(props) {

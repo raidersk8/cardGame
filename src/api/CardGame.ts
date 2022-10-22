@@ -23,6 +23,8 @@ let countCard: number;
 // Подгруженные изображения для карт
 let urlImages: string[];
 
+// Если true игра началась
+let isStartGame = false;
 /**
  * Передаем функции для работы игры
  * @param count - Кол-во одинаковых карт в группе при выборе
@@ -51,8 +53,22 @@ async function initMapCards(count: number): Promise<void> {
 }
 
 function restartCardGame() {
+	isStartGame = false;
 	fillMapCards(countCard, urlImages);
 	shuffleMapCard();
+	setTimeout(() => {
+		isStartGame = true;
+		closeAllCard();
+	}, 4000);
+}
+
+/**
+ * Закрываем все карты
+ */
+function closeAllCard() {
+	mapCards.value.forEach(item => {
+		item.isOpen = false;
+	});
 }
 
 /**
@@ -66,7 +82,7 @@ function fillMapCards(count: number, urls: string[]): void {
 		const item: ICard = {
 			url: urls[i],
 			num: i,
-			isOpen: false,
+			isOpen: true,
 		};
 		mapCards.value.push(item, item);
 	}
@@ -87,7 +103,7 @@ function shuffleMapCard(): void {
  * @param index - индекс карты
  */
 function selectCard(index:number): void {
-	if (selectedCards.value.length === countIdenticalCard) {
+	if (selectedCards.value.length === countIdenticalCard || isStartGame === false) {
 		return;
 	}
 
