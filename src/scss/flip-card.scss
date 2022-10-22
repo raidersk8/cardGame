@@ -1,10 +1,19 @@
 .flip-card {
+	position: relative;
 	width: 50px;
-	background: black;
 	border: 1px solid #fff;
+	background: black;
 
 	img {
 		display: block;
+		position: relative;
 		width: 100%;
+		opacity: 0;
+	}
+
+	&--show {
+		img {
+			opacity: 1;
+		}
 	}
 }
